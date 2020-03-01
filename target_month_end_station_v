@@ -1,0 +1,7 @@
+create or replace view target_month_end_station_v
+as
+select c.year_mon,c.station_id,c.station_name,d.heat_type,d.heat_consume,d.elec_consume,d.warter_consume,d.district,d.remark from 
+(
+select a.year_mon,b.* from temporary_year_month a join 
+(select * from temporary_heat_station where station_type=2) b
+) c left join target_month_end_station d on c.station_id=d.station_id and c.year_mon=d.year_mon
