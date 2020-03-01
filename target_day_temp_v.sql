@@ -3,10 +3,19 @@ as
 select 
 a.year_mon,
 b.day,
-c.station_id,
 c.station_name,
 d.temp 
 from temporary_year_month a join temporary_day b join 
-(select station_id,station_name from temporary_heat_station where origin_type=3) c
+(
+select '银川' as station_name
+union 
+select '城区' as station_name
+union
+select '望远' as station_name
+union
+select '永宁' as station_name
+union
+select '贺兰' as station_name
+) c
 left join target_day_temp d 
-on c.station_id=d.station_id and a.year_mon=d.year_mon and b.day=d.day
+on c.station_name=d.station_name and a.year_mon=d.year_mon and b.day=d.day
