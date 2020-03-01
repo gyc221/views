@@ -1,0 +1,13 @@
+create or replace view heat_overflow_warning_v
+as
+select 
+a.station_id,
+a.station_name,
+a.parent_station,
+a.director,
+b.year_mon,
+b.day,
+b.elec_consume,
+b.heat_consume,
+b.warter_consume
+from temporary_heat_station a left join target_day b on a.station_id=b.station_id
