@@ -19,6 +19,6 @@ from temporary_heat_station a1
 ) t 
 on t.station_type in(1,2)) a
 left join target_day b on a.station_id=b.station_id and a.year_mon=b.year_mon and a.day=b.day
-left join target_day_temp c on a.year_mon=c.year_mon and a.day=c.day
+left join target_day_temp c on a.year_mon=c.year_mon and a.day=c.day and c.station_name='银川'
 left join temporary_station_temp_heat_consume d on a.station_id=d.station_id and c.temp=d.temp
 left join target_month_end_station e on a.station_id=e.station_id and a.year_mon=e.year_mon
