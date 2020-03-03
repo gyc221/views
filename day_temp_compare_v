@@ -1,0 +1,11 @@
+create or replace view day_temp_compare_v
+as
+select 
+FROM_UNIXTIME(ts),
+maxTemp as max_temp,
+minTemp as min_temp,
+temp as avg_temp,
+maxTempForecast as max_temp_f,
+minTempForecast as min_temp_f,
+(maxTempForecast+minTempForecast)/2 as avg_temp_f
+from pm_weatherdaily
