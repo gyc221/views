@@ -1,0 +1,12 @@
+create or replace view season_temp_compare_v
+as
+select 
+heatingSeason,
+max(temp) as max_temp,
+min(temp) as min_temp,
+avg(temp) as avg_temp,
+
+max(maxTempForecast) as max_temp_f,
+min(minTempForecast) as min_temp_f,
+(max(maxTempForecast)+min(minTempForecast))/2 as avg_temp_f
+from pm_weatherdaily group by heatingSeason HAVING heatingSeason!=0
