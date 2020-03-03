@@ -1,0 +1,15 @@
+create or replace view month_temp_compare_v
+as
+select
+f_year,
+f_month,
+max(temp) as max_temp,
+min(temp) as min_temp,
+avg(temp) as avg_temp,
+max(maxTempForecast) as max_temp_f,
+min(minTempForecast) as min_temp_f,
+(max(maxTempForecast)+min(minTempForecast))/2 as avg_temp_f
+from 
+(
+select year(FROM_UNIXTIME(ts)) as f_year,month(FROM_UNIXTIME(ts)) as f_month,temp,maxTempForecast, minTempForecast from pm_weatherdaily where heatingSeason!=0
+) a group by f_year,f_month
