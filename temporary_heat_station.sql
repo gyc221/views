@@ -9,7 +9,7 @@ a.typ as origin_type,
 (case when ((a.typ=4 and a.isDirect=1) or a.typ=6) then 1 else 0 end) as is_heat_station,
 c.nam as parent_station,
 (select k.USER_NAME from 
-(select a.orgid,b.USER_NAME from  pm_userconfig a left join user_config_table_final b on a.userId=b.USER_ID where a.pmRole=2) k
+(select a.orgid,b.USER_NAME from  pm_userorginfo a left join user_config_table_final b on a.userId=b.USER_ID where (a.pmRole&1)=1) k
 where k.orgid=a.ID limit 1) as director
 from basis_org a left join basis_org c on a.pid=c.id
 where a.typ in(3,4,6)
