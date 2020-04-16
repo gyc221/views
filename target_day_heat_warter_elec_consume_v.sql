@@ -1,8 +1,10 @@
 create or replace view target_day_heat_warter_elec_consume_v
-as 
+as
 select 
 a.station_id,
 a.station_name,
+a.parent_station as p_name,
+a.pp_name,
 a.station_type,
 a.parent_id,
 a.has_child,
