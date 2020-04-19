@@ -10,17 +10,25 @@ a.parent_id,
 a.has_child,
 a.year_mon,
 a.day,
-ifnull(b.heat_consume,d.heat_consume) as heat_consume,
+a.dt,
+ifnull(b.heat_consume,func_final_getStationArea(a.station_id,a.dt)*47.6*((18-d.temp)/31.1)) as heat_consume,
 ifnull(b.warter_consume,e.warter_consume/30.0) as warter_consume,
 ifnull(b.elec_consume,e.elec_consume/30.0) as elec_consume
-from (select t.*,ym.year_mon,d.day from temporary_year_month ym join temporary_day d join 
+from 
+(
+select 
+t.*,
+ym.year_mon,
+d.day,
+DATE_ADD(ym.year_mon,INTERVAL (d.day-1) DAY) as dt 
+from temporary_year_month ym join temporary_day d join 
 (
 select *,
 (select count(*) from temporary_heat_station where parent_id= a1.station_id) as has_child 
 from temporary_heat_station a1
 ) t 
-on t.station_type in(1,2)) a
+on t.station_type in(1,2)
+) a
 left join target_day b on a.station_id=b.station_id and a.year_mon=b.year_mon and a.day=b.day
-left join target_day_temp c on a.year_mon=c.year_mon and a.day=c.day and c.station_name='银川'
-left join temporary_station_temp_heat_consume d on a.station_id=d.station_id and c.temp=d.temp
+left join pm_weatherdaily d on unix_timestamp(a.dt)=d.ts
 left join target_month_end_station e on a.station_id=e.station_id and a.year_mon=e.year_mon
