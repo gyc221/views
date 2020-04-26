@@ -5,9 +5,9 @@ a.station_id,
 a.station_name,
 a.parent_station,
 a.director,
-b.year_mon,
-b.day,
+c.year_mon,
+d.day,
 b.elec_consume,
 b.heat_consume,
 b.warter_consume
-from temporary_heat_station a left join target_day b on a.station_id=b.station_id
+from temporary_heat_station a join temporary_year_month c join temporary_day d left join target_day b on a.station_id=b.station_id and c.year_mon=b.year_mon and d.day=b.day
