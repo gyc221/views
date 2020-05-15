@@ -1,0 +1,11 @@
+create view target_season_v 
+as 
+select 
+id,
+season,
+CONVERT(left(season,4),SIGNED) as season_start,
+CONVERT(right(season,4),SIGNED) as season_end,
+name,
+target,
+remark
+from target_season
