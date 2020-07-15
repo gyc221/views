@@ -1,0 +1,31 @@
+create or replace view base_consume_v
+as
+select 
+dt,stationId,
+'water_consume' as tag_type,
+waterConsumption as val,
+(case isTerminalStation when 0 then centerStationName when 1 then terminalStationName else '' end) as stationName
+from histdb.consumptiondailynew
+union 
+select 
+dt,stationId,
+'elec_consume' as tag_type,
+powerConsumption as val,
+(case isTerminalStation when 0 then centerStationName when 1 then terminalStationName else '' end) as stationName
+from histdb.consumptiondailynew
+union 
+select 
+dt,
+stationId,
+'heat_consume' as tag_type,
+heatConsumption as val,
+(case isTerminalStation when 0 then centerStationName when 1 then terminalStationName else '' end) as stationName
+from histdb.consumptiondailynew
+union 
+select 
+dt,
+stationId,
+'salt_consume' as tag_type,
+saltConsumption as val,
+(case isTerminalStation when 0 then centerStationName when 1 then terminalStationName else '' end) as stationName
+from histdb.consumptiondailynew
