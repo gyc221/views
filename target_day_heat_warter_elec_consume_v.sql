@@ -27,7 +27,7 @@ select *,
 (select count(*) from temporary_heat_station where parent_id= a1.station_id) as has_child 
 from temporary_heat_station a1
 ) t 
-on t.station_type in(1,2)
+on t.station_type in(1,2) AND t.parent_id !=140
 ) a
 left join target_day b on a.station_id=b.station_id and a.year_mon=b.year_mon and a.day=b.day
 left join pm_weatherdaily d on unix_timestamp(a.dt)=d.ts
