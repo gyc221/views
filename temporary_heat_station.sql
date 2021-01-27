@@ -13,4 +13,4 @@ d.nam as pp_name,
 (select a.orgid,b.USER_NAME from  pm_userorginfo a left join user_config_table_final b on a.userId=b.USER_ID where (a.pmRole&1)=1) k
 where k.orgid=a.ID limit 1) as director
 from basis_org a left join basis_org c on a.pid=c.id left join basis_org d on c.PID=d.ID
-where a.typ in(3,4,6)
+where a.typ in(3,4,6) and a.invalid=0
